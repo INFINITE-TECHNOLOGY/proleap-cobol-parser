@@ -7,11 +7,11 @@ plugins {
     id "java"
     id "maven-publish"
     id "idea"
+    id "com.jfrog.bintray" version "1.8.4"
+    id 'antlr'
 }
 
-apply plugin: 'com.jfrog.bintray'
-
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 group = "io.i-t"
 version = "3.0.0"
 description = "Clone of https://github.com/uwol/proleap-cobol-parser"
@@ -24,17 +24,17 @@ repositories {
 }
 
 sourceSets {
-    main.groovy.srcDirs = ["src/main/groovy"]
-    test.groovy.srcDirs = ["src/test/groovy"]
+    main.java.srcDirs = ["src/main/java"]
+    test.java.srcDirs = ["src/test/java"]
 }
 
 dependencies {
-    compile 'commons-io::commons-io:2.5'
-    compile 'commons-lang::commons-lang:2.6'
-    compile 'org.antlr::antlr4:${antlr.version}'
-    compile 'org.antlr::antlr4-runtime:${antlr.version}'
-    compile 'org.slf4j::slf4j-api:${slf4j.version}'
-    testCompile 'junit::junit:4.12'
+    compile 'commons-io:commons-io:2.5'
+    compile 'commons-lang:commons-lang:2.6'
+    antlr 'org.antlr:antlr4:4.7.2'
+    //compile 'org.antlr:antlr4-runtime:4.7.2'
+    compile "io.i-t:bobbin:2.0.13"
+    testCompile 'junit:junit:4.12'
 }
 
 task sourceJar(type: Jar) {
@@ -88,6 +88,14 @@ bintray {
         licenses = ["Apache-2.0"]
     }
 }
+
+
+generateGrammarSource {
+    maxHeapSize = "2048m"
+    arguments += ["-visitor", "-listener"]
+}
+
+
 
 configurations {
     providedRuntime
