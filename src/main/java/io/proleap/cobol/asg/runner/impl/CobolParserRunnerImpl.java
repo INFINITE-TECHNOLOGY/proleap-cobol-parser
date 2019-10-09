@@ -61,6 +61,18 @@ public class CobolParserRunnerImpl implements CobolParserRunner {
 		analyzeProcedureStatements(program);
 	}
 
+	public Program analyzeCopybook(final String cobolCode, final File copybookFile, final CobolSourceFormatEnum format)
+			throws IOException {
+
+		final CobolParserParams params = createDefaultParams(format, copybookFile);
+		final Program program = new ProgramImpl();
+
+		parseCode(cobolCode, getCompilationUnitName(copybookFile), program, params);
+		analyze(program);
+
+		return program;
+	}
+
 	@Override
 	public Program analyzeCode(final String cobolCode, final String compilationUnitName, final CobolParserParams params)
 			throws IOException {

@@ -13,7 +13,7 @@ plugins {
 
 sourceCompatibility = 1.8
 group = "io.i-t"
-version = "3.0.0"
+version = "3.0.0.1"
 description = "Clone of https://github.com/uwol/proleap-cobol-parser"
 
 repositories {
